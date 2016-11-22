@@ -13,6 +13,20 @@
 
 
 char **format_file(FILE *infile) {
+	char * line = NULL;
+ 	size_t len = 0;
+ 	size_t read;
+
+	while ((read = getline(&line, &len, infile)) != -1){
+ 		printf("Retrieved line of length %zu :\n", read);
+ 		printf("%s", line);
+ 	}
+
+ 	if (line) {
+ 		free(line);
+ 	}
+ 	exit(0);
+
 	return NULL;
 }
 
