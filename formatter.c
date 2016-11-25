@@ -21,6 +21,7 @@ char **format_file(FILE *infile) {
  	char** lines;
 
  	/** creates an array of char**'s for each char* (otherwise known as a string or a line) **/
+ 	/** an array of addresses holding addresses which store chars **/
  	lines = (char**) malloc(sizeof(char*) * 50);
 	if(!lines){
 		printf("Error allocating memory for malloc on line 21"); 
@@ -41,7 +42,7 @@ char **format_file(FILE *infile) {
 			abort();
 		}
 
-		lines[idx] = line;
+		*(lines + idx -1) = line;
 		
 		/*if (line) {
  			free(line);
