@@ -36,17 +36,18 @@ char **format_file(FILE *infile) {
 /***************************** END CODE THAT WORKS ******************/	
 
 		lines[idx] = (char*) malloc(sizeof(char) * read);
-		idx++;
+		
  		if(!lines){ 
  			printf("Error allocating memory for malloc on line 32");
 			abort();
 		}
 
-		*(lines + idx -1) = line;
+		*(lines + idx) = line;
 		
 		/*if (line) {
  			free(line);
  		}*/
+ 		idx ++;
  	}
 
  	/*printf("%s\n",lines[0]);*/
@@ -54,7 +55,7 @@ char **format_file(FILE *infile) {
  	char ** l;
 
  	for (l = lines; *l != NULL; l++) {
-		printf ("%s\n", *l);
+		printf ("%s", *l);
 	}
 
 	return lines;
