@@ -17,12 +17,22 @@ char **format_file(FILE *infile) {
 	char * line = NULL;
  	size_t len = 0;
  	size_t read;
+ 	char* temp = NULL; /* for getting the max line length and the number of lines */
+ 	size_t temp_len = 0;
+ 	size_t temp_read;
  	int idx = 0;
  	char** lines;
+ 	int num_lines = 0;
+ 	size_t max_line = 0;
+
+ 	while((temp_read = getline(&temp, &temp_len, infile)) != -1){
+ 		num_lines ++;
+ 		if(temp_read > max_line) max_line = temp_read;
+ 	} 
 
  	/** creates an array of char**'s for each char* (otherwise known as a string or a line) **/
  	/** an array of addresses holding addresses which store chars **/
- 	lines = (char**) malloc(sizeof(char*) * 50);
+ 	lines = (char**) malloc(sizeof(char*) * num_lines);
 	if(!lines){
 		printf("Error allocating memory for malloc on line 21"); 
 		abort();
@@ -32,7 +42,7 @@ char **format_file(FILE *infile) {
 	while((read = getline(&line, &len, infile)) != -1){
  		/*printf("Retrieved line of length %zu :\n", read);*/
 
-		lines[idx] = (char*) malloc(sizeof(char) * read);
+		lines[idx] = (char*) malloc(sizeof(char) * max_line);
 		
  		if(!lines){ 
  			printf("Error allocating memory for malloc on line 32");
