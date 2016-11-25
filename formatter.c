@@ -12,27 +12,56 @@
 #include "formatter.h"
 
 
+
 char **format_file(FILE *infile) {
 	char * line = NULL;
  	size_t len = 0;
  	size_t read;
+ 	int idx = 0;
+ 	char** lines;
 
-	while ((read = getline(&line, &len, infile)) != -1){
- 		printf("Retrieved line of length %zu :\n", read);
- 		printf("%s", line);
+ 	/** creates an array of char**'s for each char* (otherwise known as a string or a line) **/
+ 	lines = (char**) malloc(sizeof(char*) * 50);
+	if(!lines){
+		printf("Error allocating memory for malloc on line 21"); 
+		abort();
+	}
+
+
+/***************************** CODE THAT WORKS ******************/
+	while((read = getline(&line, &len, infile)) != -1){
+ 		/*printf("Retrieved line of length %zu :\n", read);
+ 		printf("%s", line); **/
+/***************************** END CODE THAT WORKS ******************/	
+
+		lines[idx] = (char*) malloc(sizeof(char) * read);
+		idx++;
+ 		if(!lines){ 
+ 			printf("Error allocating memory for malloc on line 32");
+			abort();
+		}
+
+		lines[idx] = line;
+		
+		/*if (line) {
+ 			free(line);
+ 		}*/
  	}
 
- 	if (line) {
- 		free(line);
- 	}
- 	exit(0);
+ 	/*printf("%s\n",lines[0]);*/
+ 	
+ 	char ** l;
 
-	return NULL;
+ 	for (l = lines; *l != NULL; l++) {
+		printf ("%s\n", *l);
+	}
+
+	return lines;
 }
 
 
 char **format_lines(char **lines, int num_lines) {
-	char **result = NULL;
+	char **result = lines;
 
 #ifdef DEBUG
 	result = (char **)malloc(sizeof(char *) * 2);

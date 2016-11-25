@@ -18,8 +18,12 @@ int main(int argc, char *argv[]) {
 	if(file == NULL){
 		fprintf(stderr, "unable  to open %s\n", argv[1]);
 		exit(1);	
+	}
 
-	}	
+	format_file(file);
+
+	/**format_lines(formatted_file, )**/
+
 #endif
 	exit(0);
 }
