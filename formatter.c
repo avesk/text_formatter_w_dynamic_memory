@@ -22,18 +22,15 @@ char **format_file(FILE *infile) {
 
  	/** creates an array of char**'s for each char* (otherwise known as a string or a line) **/
  	/** an array of addresses holding addresses which store chars **/
- 	lines = (char**) malloc(sizeof(char*) * 50);
+ 	lines = (char**) malloc(sizeof(char*) * lines);
 	if(!lines){
 		printf("Error allocating memory for malloc on line 21"); 
 		abort();
 	}
 
 
-/***************************** CODE THAT WORKS ******************/
 	while((read = getline(&line, &len, infile)) != -1){
  		/*printf("Retrieved line of length %zu :\n", read);
- 		printf("%s", line); **/
-/***************************** END CODE THAT WORKS ******************/	
 
 		lines[idx] = (char*) malloc(sizeof(char) * read);
 		
@@ -47,7 +44,7 @@ char **format_file(FILE *infile) {
 		/*if (line) {
  			free(line);
  		}*/
- 		idx ++;
+ 		idx ++;		
  	}
 
  	/*printf("%s\n",lines[0]);*/
