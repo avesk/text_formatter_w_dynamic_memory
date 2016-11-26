@@ -20,51 +20,56 @@ char **format_file(FILE *infile) {
  	char* temp = NULL; /* for getting the max line length and the number of lines */
  	size_t temp_len = 0;
  	size_t temp_read;
- 	int idx = 0;
+ 	int idx;
  	char** lines;
- 	int num_lines = 0;
+ 	char** temp_lines;
+ 	int size = 1;
  	size_t max_line = 0;
+ 	int i;
 
- 	while((temp_read = getline(&temp, &temp_len, infile)) != -1){
+ 	/*while((temp_read = getline(&temp, &temp_len, infile)) != -1){
  		num_lines ++;
  		if(temp_read > max_line) max_line = temp_read;
- 	} 
+ 	}
+
+ 	rewind(infile);*/
 
  	/** creates an array of char**'s for each char* (otherwise known as a string or a line) **/
  	/** an array of addresses holding addresses which store chars **/
- 	lines = (char**) malloc(sizeof(char*) * num_lines);
+ 	lines = (char**) malloc(sizeof(char*) * size);
 	if(!lines){
-		printf("Error allocating memory for malloc on line 21"); 
+		printf("Error allocating memory for malloc on %d", 39); 
 		abort();
 	}
 
-
 	while((read = getline(&line, &len, infile)) != -1){
  		/*printf("Retrieved line of length %zu :\n", read);*/
+		size*=2;
+ 		lines = (char**) realloc(lines, sizeof(char*) * size);
+ 		if(!lines){
+			printf("Error allocating memory for malloc on %d", 39); 
+			abort();
+		}
 
-		lines[idx] = (char*) malloc(sizeof(char) * max_line);
+		lines[idx] = (char*) malloc(sizeof(char) * len);
 		
  		if(!lines){ 
  			printf("Error allocating memory for malloc on line 32");
 			abort();
 		}
 
-		*(lines + idx) = line;
+		strncpy(lines[idx], line, max_line);
 		
-		/*if (line) {
- 			free(line);
- 		}*/
- 		idx ++;		
+ 		idx ++;				
  	}
 
- 	/*printf("%s\n",lines[0]);*/
- 	
+ 	/*printf("%s",lines[2]);*/
+ 	/*
  	char ** l;
-
- 	for (l = lines; *l != NULL; l++) {
-		printf ("%s", *l);
-	}
-
+ 	for(l = lines; *l != NULL; l++) {
+		printf("%s", *l);
+	} */
+	
 	return lines;
 }
 
